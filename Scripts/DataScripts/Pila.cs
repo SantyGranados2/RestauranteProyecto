@@ -8,11 +8,16 @@ public class Pila<T>
         get { return tamano; }
     }
 
+    public bool EstaVacia()
+    {
+        return tamano == 0;
+    }
+
     public void AgregarElemento(T valor)
     {
         Nodo<T> nuevoNodo = new Nodo<T>(valor);
 
-        if (cima == null)
+        if (EstaVacia())
         {
             cima = nuevoNodo;
         }
@@ -27,7 +32,7 @@ public class Pila<T>
 
     public void EliminarElemento()
     {
-        if (cima == null)
+        if (EstaVacia())    
         {
             return;
         }
