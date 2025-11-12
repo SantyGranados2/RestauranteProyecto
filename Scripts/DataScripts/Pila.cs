@@ -3,14 +3,32 @@ public class Pila<T>
     private Nodo<T> cima;
     private int tamano;
 
-    public int Tamano
+    public int Tamano => tamano;
+
+    public bool EstaVacia() => tamano == 0;
+
+    public void Apilar(T valor) => AgregarElemento(valor);
+
+    public T Desapilar()
     {
-        get { return tamano; }
+        if (EstaVacia())
+        {
+            throw new InvalidOperationException("La pila está vacía.");
+        }
+        
+        var valor = cima.Valor;
+        EliminarElemento();
+        return valor;
     }
 
-    public bool EstaVacia()
+    public T Cima()
     {
-        return tamano == 0;
+        if (EstaVacia())
+        {
+            throw new InvalidOperationException("La pila está vacía.");
+        }
+        
+        return cima.Valor;
     }
 
     public void AgregarElemento(T valor)
