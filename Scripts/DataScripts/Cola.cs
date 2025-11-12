@@ -11,15 +11,25 @@ public class Cola<T>
         tamano = 0;
     }
 
-    public int Tamano()
+    public int Tamano() => tamano;
+
+    public bool EstaVacia() => tamano == 0;
+
+    public void Encolar(T valor) => Agregar(valor);
+
+    public T Desencolar()
     {
-        return tamano;
+        if (EstaVacia())
+        {
+            throw new InvalidOperationException("La cola está vacía.");
+        }
+
+        var valor = cabeza.Valor;
+        Eliminar();
+        return valor;
     }
 
-    public bool EstaVacia()
-    {
-        return tamano == 0;
-    }
+    public T Frente() => Primero();
 
     public void Agregar(T valor)
     {
@@ -50,8 +60,10 @@ public class Cola<T>
         cabeza = cabeza.Siguiente;
         tamano--;
 
-        if (cabeza == null)
+        if (cabeza == null) 
+        {
             cola = null;
+        }   
     }
 
     public T Primero()
@@ -62,6 +74,35 @@ public class Cola<T>
         }
 
         return cabeza.Valor;
+    }
+
+    public void Recorrer(Action<T> accion)
+    {
+        var actual = cabeza;
+
+        while (actual != null)
+        {
+            accion(actual.Valor);
+            actual = actual.Siguiente;
+        }
+    }
+
+    public bool Existe(Predicate<T> predicado)
+    {
+        var actual = cabeza;
+
+        while (actual != null)
+        {
+            if (predicado(actual.Valor))
+            {
+                return true;
+            }
+            
+            actual = actual.Siguiente;
+        }
+        
+        return false;
+        
     }
 
     public void Vaciar()
